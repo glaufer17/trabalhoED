@@ -1,0 +1,141 @@
+﻿Estruturas:
+
+
+Interno:
+
+
+* int bit: Representa o índice do bit em que as chaves se diferenciam.
+* struct No* esq: Ponteiro para o nó filho esquerdo.
+* struct No* dir: Ponteiro para o nó filho direito.
+Folha:
+
+
+* char* chave: Ponteiro para a string que representa a chave.
+* int indice: Índice associado à chave.
+Dados:
+
+
+* Interno interno: Estrutura de dados do tipo Interno.
+* Folha folha: Estrutura de dados do tipo Folha.
+No:
+
+
+* int ehFolha: Indica se o nó é uma folha (valor 1) ou um nó interno (valor 0).
+* Dados dados: Union que armazena os dados do nó. Pode ser do tipo Interno ou Folha.
+
+
+
+
+Funções:
+
+
+criarFolha:
+
+
+Essa função cria e inicializa um novo nó folha com os parâmetros fornecidos.
+Recebe uma chave (string) e um índice como entrada.
+Aloca memória para um novo nó folha.
+Define ehFolha como 1.
+Atribui a chave e o índice à estrutura Folha.
+Retorna o ponteiro para o novo nó folha.
+
+
+criarInterno:
+
+
+Essa função cria e inicializa um novo nó interno com os parâmetros fornecidos.
+Recebe um bit (índice do bit de diferenciação), um ponteiro para o filho esquerdo e um ponteiro para o filho direito como entrada.
+Aloca memória para um novo nó interno.
+Define ehFolha como 0.
+Atribui o bit, o filho esquerdo e o filho direito à estrutura Interno.
+Retorna o ponteiro para o novo nó interno.
+
+
+encontrarBitDiferente:
+
+
+Essa função encontra o índice do primeiro bit diferente entre duas strings.
+Recebe duas strings (chave1 e chave2) como entrada.
+Percorre as strings comparando os caracteres até encontrar uma diferença ou chegar ao fim de uma das strings.
+Retorna o índice do primeiro bit diferente.
+
+
+inserir:
+
+
+Essa função insere uma nova chave na árvore.
+Recebe um ponteiro para a raiz da árvore, uma chave (string) e um índice como entrada.
+Verifica se a raiz é nula. Se for, cria um novo nó folha com a chave e o índice fornecidos e o retorna como raiz.
+Se a raiz for uma folha, compara a chave fornecida com a chave da raiz.
+Se a chave já existir na árvore, retorna a raiz.
+Se a chave for diferente, cria um novo nó interno e ajusta os ponteiros para os nós folha existentes.
+Retorna a raiz atualizada.
+Se a raiz for um nó interno, encontra o bit de diferenciação entre a chave fornecida e a chave do filho esquerdo da raiz.
+Se o bit de diferenciação for igual ao tamanho da chave do filho esquerdo, chama recursivamente a função inserir para o filho esquerdo.
+Caso contrário, cria um novo nó interno, atualiza os ponteiros para os nós existentes e retorna a raiz atualizada.
+Retorna a raiz.
+
+
+buscar:
+
+
+Essa função busca uma chave na árvore e retorna o índice associado a ela.
+Recebe um ponteiro para a raiz da árvore e uma chave (string) como entrada.
+Verifica se a raiz é nula. Se for, retorna -1 (chave não encontrada).
+Se a raiz for uma folha, compara a chave fornecida com a chave da raiz.
+Se forem iguais, retorna o índice da folha.
+Se a raiz for um nó interno, encontra o bit de diferenciação entre a chave fornecida e a chave do filho esquerdo da raiz.
+Se o bit de diferenciação for igual ao tamanho da chave do filho esquerdo, chama recursivamente a função buscar para o filho esquerdo.
+Chama recursivamente a função buscar para o filho direito da raiz.
+Retorna o resultado da busca no filho direito.
+
+
+imprimirArvoreRecursivo:
+
+
+Essa função imprime a árvore Patricia de forma recursiva.
+Recebe um ponteiro para a raiz da árvore e um nível como entrada.
+Verifica se a raiz é nula. Se for, retorna.
+Se a raiz for uma folha, imprime a chave e o índice.
+Se a raiz for um nó interno, chama recursivamente a função imprimirArvoreRecursivo para o filho esquerdo, incrementando o nível.
+Imprime o bit do nó interno.
+Chama recursivamente a função imprimirArvoreRecursivo para o filho direito, incrementando o nível.
+
+
+imprimirArvore:
+
+
+Essa função imprime a árvore Patricia.
+Recebe um ponteiro para a raiz da árvore como entrada.
+Imprime uma mensagem inicial.
+Chama a função imprimirArvoreRecursivo para imprimir a árvore de forma recursiva, começando pelo nível 0.
+
+
+liberarArvore:
+
+
+Essa função libera a memória ocupada pela árvore Patricia.
+Recebe um ponteiro para a raiz da árvore como entrada.
+Verifica se a raiz é nula. Se for, retorna.
+Se a raiz for uma folha, libera a memória ocupada pela chave.
+Se a raiz for um nó interno, chama recursivamente a função liberarArvore para o filho esquerdo e o filho direito.
+Libera a memória ocupada pela raiz.
+
+
+Remover 
+
+
+Recebe um ponteiro para a raiz da árvore (No** raiz) e a chave (char* chave) que deseja remover. O objetivo é remover os nós folha associados a essa chave e verificar se o caminho possui mais filhos que são outras palavras, fazendo a junção do restante da palavra que não possui um prefixo sendo utilizado.
+
+
+A função segue a seguinte lógica:
+
+
+Verifica se a raiz é nula. Se for, retorna.
+Se a raiz for uma folha, verifica se a chave fornecida corresponde à chave da folha. Se sim, libera a memória ocupada pela chave e pelo nó folha, e atribui NULL à raiz.
+Se a raiz for um nó interno, encontra o bit de diferenciação entre a chave fornecida e a chave do filho esquerdo da raiz.
+Se o bit de diferenciação for igual ao tamanho da chave do filho esquerdo, chama recursivamente a função remover para o filho esquerdo.
+Caso contrário, retorna, pois a chave não foi encontrada na árvore.
+Após remover o nó folha correspondente à chave, verifica se o caminho possui apenas um filho que é outra palavra.
+Se sim, realiza a junção do restante da palavra que não possui um prefixo sendo utilizado, atualizando a raiz e liberando a memória ocupada pelos nós removidos.
+Você pode chamar a função remover passando o endereço do ponteiro da raiz da árvore e a chave que deseja remover.
