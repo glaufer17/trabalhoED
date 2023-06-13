@@ -1,0 +1,66 @@
+explicação detalhada sobre o funcionamento de cada função no código da árvore Patricia:
+
+Função criarNo():
+
+A função criarNo() aloca memória para um novo nó da árvore Patricia e inicializa seus campos.
+O novo nó é criado com malloc(sizeof(No)), que aloca a quantidade de memória necessária para armazenar a estrutura No.
+Em seguida, o campo ehFimDePalavra é definido como 0, indicando que inicialmente não representa o fim de uma palavra.
+O loop for é utilizado para inicializar todos os ponteiros do array filho como NULL.
+Por fim, o ponteiro para o novo nó é retornado.
+Função inserir(No* raiz, const char* chave):
+
+A função inserir() insere uma palavra na árvore Patricia.
+Recebe um ponteiro para a raiz da árvore e a palavra a ser inserida.
+Primeiro, é determinado o comprimento da palavra usando strlen(chave).
+Em seguida, um ponteiro noAtual é inicializado com a raiz da árvore.
+O loop for percorre cada nível da árvore de acordo com as letras da palavra.
+A cada iteração, é calculado o índice correspondente à letra atual da palavra subtraindo o caractere 'a' do caractere atual da palavra.
+Se o nó atual não tiver um filho no índice calculado, um novo nó é criado e atribuído como filho do nó atual.
+Após a criação do novo nó, o ponteiro noAtual é atualizado para apontar para o novo nó.
+Após percorrer todos os níveis da palavra, o campo ehFimDePalavra do último nó é definido como 1, indicando que ele representa o fim de uma palavra.
+Função buscar(No* raiz, const char* chave):
+
+A função buscar() verifica se uma palavra está presente na árvore Patricia.
+Recebe um ponteiro para a raiz da árvore e a palavra a ser buscada.
+Novamente, é determinado o comprimento da palavra usando strlen(chave).
+Um ponteiro noAtual é inicializado com a raiz da árvore.
+O loop for percorre cada nível da árvore de acordo com as letras da palavra.
+A cada iteração, é calculado o índice correspondente à letra atual da palavra subtraindo o caractere 'a' do caractere atual da palavra.
+Se o nó atual não tiver um filho no índice calculado, significa que a palavra não está presente na árvore e a função retorna 0.
+Caso contrário, o ponteiro noAtual é atualizado para apontar para o próximo nó da árvore.
+Após percorrer todos os níveis da palavra, verifica-se se o último nó visitado não é nulo e se o campo ehFimDePalavra desse nó é igual a 1, indicando que a palavra foi encontrada na árvore.
+Função temFilhos(No* no):
+
+A função temFilhos() verifica se um nó possui filhos.
+Recebe um ponteiro para um nó da árvore.
+Utiliza um loop for para percorrer todos os índices do array filho do nó.
+Se encontrar algum filho não nulo, significa que o nó possui filhos e a função retorna 1.
+Caso contrário, retorna 0, indicando que o nó não possui filhos.
+Função remover(No* no, const char* chave, int nivel, int comprimento):
+
+A função remover() remove uma palavra da árvore Patricia.
+Recebe um ponteiro para um nó da árvore, a palavra a ser removida, o nível atual e o comprimento da palavra.
+Primeiro, verifica-se se o nó passado como argumento é nulo. Se for, retorna 0.
+Em seguida, verifica-se se o nível atual é igual ao comprimento da palavra. Se for, significa que chegamos ao nó correspondente à última letra da palavra.
+Nesse caso, se o campo ehFimDePalavra do nó for igual a 1, significa que a palavra foi encontrada na árvore e pode ser removida.
+Se o campo ehFimDePalavra for igual a 0, a palavra não está presente na árvore e a função retorna 0.
+Caso contrário, se o campo ehFimDePalavra for igual a 1, a palavra é removida e verificamos se o nó não tem mais filhos.
+Se o nó não tiver mais filhos, é liberada a memória alocada para esse nó e a função retorna 1.
+Caso contrário, a função retorna 0.
+Se o nível atual não for igual ao comprimento da palavra, a função continua a recursão para o próximo nível e para o próximo nó da árvore.
+Função imprimirTrie(No* no, char* palavra, int nivel):
+
+A função imprimirTrie() imprime todas as palavras presentes na árvore Patricia.
+Recebe um ponteiro para um nó da árvore, um array de caracteres para armazenar a palavra atual e o nível atual.
+Se o campo ehFimDePalavra do nó for igual a 1, significa que a palavra atual está completa e pode ser impressa.
+Nesse caso, o array palavra é terminado com o caractere nulo \0 e a palavra é impressa usando printf().
+Em seguida, o loop for é utilizado para percorrer todos os índices do array filho do nó.
+Para cada filho não nulo, o caractere correspondente ao índice é adicionado ao array palavra e a função é chamada recursivamente para o próximo nível e para o próximo nó da árvore.
+Função liberarTrie(No* no):
+
+A função liberarTrie() libera a memória alocada para a árvore Patricia.
+Recebe um ponteiro para um nó da árvore.
+O loop for é utilizado para percorrer todos os índices do array filho do nó.
+Para cada filho não nulo, a função é chamada recursivamente para liberar a memória alocada para esse filho.
+Em seguida, a memória alocada para o nó atual é liberada com free().
+Essas são as principais funções e sua lógica de funcionamento no código da árvore Patricia. Cada uma desempenha um papel específico na inserção, busca, remoção e manipulação dos nós da árvore.
